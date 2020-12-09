@@ -31,14 +31,14 @@ public class CarController {
     }
 
     //POST A NEW CAR
-    @RequestMapping(value = "/cars/store", method = RequestMethod.POST)
+    @RequestMapping(value = "/cars/", method = RequestMethod.POST)
     public String createCars(@RequestBody Car car) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Car> entity = new HttpEntity<Car>(car,headers);
 
         return restTemplate.exchange(
-                "http://localhost:8080/cars/store", HttpMethod.POST, entity, String.class).getBody();
+                "http://localhost:8080/cars/", HttpMethod.POST, entity, String.class).getBody();
     }
 
     // UPDATE A CAR
