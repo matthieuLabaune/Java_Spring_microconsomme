@@ -1,6 +1,7 @@
 package com.econsomme.microconsomme.controller;
 
 import com.econsomme.microconsomme.model.Car;
+import com.fasterxml.jackson.core.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,13 +22,24 @@ public class CarController {
 
     //GET ALL CARS
     @RequestMapping(value = "/cars")
-    public String getProductList() {
+    public String getCarList() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         return restTemplate.exchange(
-                "http://localhost:8080/cars", HttpMethod.GET, entity, String.class).getBody();
+                "http://localhost:8081/cars", HttpMethod.GET, entity, String.class).getBody();
+    }
+
+    //GET A CAR
+    @RequestMapping(value = "/cars/{id}")
+    public String getACars(@PathVariable("id") String id) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        return restTemplate.exchange(
+                "http://localhost:8081/cars/"+id, HttpMethod.GET, entity, String.class).getBody();
     }
 
     //POST A NEW CAR
@@ -38,7 +50,7 @@ public class CarController {
         HttpEntity<Car> entity = new HttpEntity<Car>(car,headers);
 
         return restTemplate.exchange(
-                "http://localhost:8080/cars/", HttpMethod.POST, entity, String.class).getBody();
+                "http://localhost:8081/cars/", HttpMethod.POST, entity, String.class).getBody();
     }
 
     // UPDATE A CAR
@@ -49,7 +61,7 @@ public class CarController {
         HttpEntity<Car> entity = new HttpEntity<Car>(car,headers);
 
         return restTemplate.exchange(
-                "http://localhost:8080/cars/"+id, HttpMethod.PUT, entity, String.class).getBody();
+                "http://localhost:8081/cars/"+id, HttpMethod.PUT, entity, String.class).getBody();
     }
 
     //DELETE A CAR
@@ -60,6 +72,6 @@ public class CarController {
         HttpEntity<Car> entity = new HttpEntity<Car>(headers);
 
         return restTemplate.exchange(
-                "http://localhost:8080/cars/"+id, HttpMethod.DELETE, entity, String.class).getBody();
+                "http://localhost:8081/cars/"+id, HttpMethod.DELETE, entity, String.class).getBody();
     }
 }
